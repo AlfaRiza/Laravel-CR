@@ -6,16 +6,36 @@ use Illuminate\Http\Request;
 use App\Models\User;
 class UserController extends Controller
 {
-    public function index(){
-        $user = User::all();
-        return view('index', ['user' => $user]);
+    public function hitung($angka1, $angka2, $status){
+        if ($status == 'perkalian') {
+            $hasil = $angka1 * $angka2;
+            $status = $this->predikat($hasil);
+        }elseif($status == 'penjumlahan'){
+            $hasil = $angka1 + $angka2;
+        }elseif($status == 'pengurangan'){
+            $hasil = $angka1 - $angka2;
+        }else{
+            $hasil = $angka1 / $angka2;
+        }
+
+        return 'hasil' . $hasil . 'status :' . $status;
     }
 
-    public function create(){
-        return view('create');
+    public function predikat($hasil){
+        if ($hasil > 10) {
+            return $predikat = 'Good';
+        }else{
+            return $predikat = 'Bad';
+        }
     }
 
-    public function store(Request $request){
+
+    
+    // public function create(){
+    //     return view('create');
+    // }
+
+public function store(Request $request){
         $validate = $request->validate([
             'nama_awal' => 'required',
             'nama_akhir' => 'required',
